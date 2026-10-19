@@ -30,6 +30,7 @@
     "tools/*.mjs",
     "test",
     "README.md",
+    "NOTICE.md",
     "LICENSE"
   ],
   "keywords": [
