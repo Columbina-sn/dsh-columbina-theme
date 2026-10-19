@@ -1020,6 +1020,20 @@ ok(
   /@supports not \(background-clip:text\)/.test(cssText),
 )
 ok(
+  '深色主题的欢迎语不会把渐变画成整块浅色方块',
+  (() => {
+    const m = /body\[data-dsh-columbina\]\[data-columbina-skin="on"\]\[data-ds-dark-theme\] \.colu-hero-title-text\{([^}]*)\}/.exec(cssText)
+    if (m === null) return false
+    const block = m[1]
+    return block.includes('background-image:linear-gradient(168deg,#e6ebff') &&
+      block.includes('-webkit-background-clip:text') &&
+      block.includes('background-clip:text') &&
+      block.includes('-webkit-text-fill-color:transparent') &&
+      !/background:linear-gradient/.test(block)
+  })(),
+  '深色覆盖规则',
+)
+ok(
   '音符自己轻轻晃，且给 prefers-reduced-motion 让路',
   /@keyframes colu-note-float/.test(cssText) && /prefers-reduced-motion: reduce/.test(cssText) && /\.colu-hero-note\{animation:none\}/.test(cssText),
 )
