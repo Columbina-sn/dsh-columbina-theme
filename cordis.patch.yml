@@ -1,0 +1,6 @@
+# 哥伦比娅主题 bundle patch：把本包插入 profile 的插件树。
+# 安装：dsh plugin --profile desktop add github:<owner>/dsh-columbina-theme
+# 本地：dsh plugin --profile desktop add D:\path\to\dsh-columbina-theme
+- insert:
+    - id: ui-columbina-theme
+      name: dsh-columbina-theme

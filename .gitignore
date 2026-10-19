@@ -1,0 +1,19 @@
+# 依赖与缓存
+node_modules/
+__pycache__/
+*.py[cod]
+
+# 系统垃圾
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# 面板里自添加的表情包（运行时数据，不属于插件本体）。
+# 留在插件目录里是为了让聊天的 Markdown 绝对路径读得到它。
+stickers-custom/
+
+# 背景图不随仓库分发：只保留这个目录里的 README。
+# 用户把自己准备的图片放进 Background/，插件启动/刷新时会自动扫描。
+Background/*
+!Background/README.md
+!Background/.gitkeep

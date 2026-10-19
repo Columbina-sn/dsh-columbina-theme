@@ -1,0 +1,44 @@
+{
+  "name": "dsh-columbina-theme",
+  "version": "0.1.0",
+  "private": true,
+  "description": "哥伦比娅（Columbina）主题：月隐银蓝渐变毛玻璃 UI + 侧边栏可编辑的人格设定",
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./client": "./lib/client.js",
+    "./package.json": "./package.json"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "inject": [],
+      "platform": "web"
+    }
+  },
+  "files": [
+    "lib/index.js",
+    "lib/client.js",
+    "cordis.patch.yml",
+    "stickers.json",
+    "Background",
+    "meme/*.png",
+    "meme/*.webp",
+    "tools/*.mjs",
+    "test",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "deepseek-harness",
+    "theme",
+    "skin",
+    "persona"
+  ],
+  "license": "MIT"
+}

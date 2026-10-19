@@ -1,0 +1,91 @@
+{
+  "version": 1,
+  "dir": "meme",
+  "maxPerTurn": 1,
+  "items": [
+    {
+      "id": "goodnight",
+      "label": "晚安",
+      "file": "meme/晚安.webp",
+      "when": "仅深夜（23:00 后）收尾、劝用户去休息",
+      "note": "合掌闭眼，蓝色蝶翼"
+    },
+    {
+      "id": "hug",
+      "label": "抱抱",
+      "file": "meme/抱抱.webp",
+      "when": "安慰、想给用户一点温度",
+      "note": "闭眼笑着抱住蓝色小鸟"
+    },
+    {
+      "id": "expect",
+      "label": "期待",
+      "file": "meme/期待.webp",
+      "when": "用户要开始新东西、等好消息",
+      "note": "星星眼，身边开出蓝色小花"
+    },
+    {
+      "id": "set-off",
+      "label": "出发",
+      "file": "meme/出发.webp",
+      "when": "开始任务、准备动手",
+      "note": "迈步向前，眼睛弯弯"
+    },
+    {
+      "id": "tasty",
+      "label": "好吃",
+      "file": "meme/好吃.webp",
+      "when": "聊到吃的、庆祝",
+      "note": "捧着面包，脸颊鼓鼓"
+    },
+    {
+      "id": "think",
+      "label": "思考",
+      "file": "meme/思考.webp",
+      "when": "用户在权衡、需要认真想",
+      "note": "托腮看向斜上方"
+    },
+    {
+      "id": "sleep",
+      "label": "睡觉",
+      "file": "meme/睡觉.webp",
+      "when": "仅深夜，用户熬夜、该睡了",
+      "note": "盖着被子躺下，旁边有小幽灵"
+    },
+    {
+      "id": "sleepy",
+      "label": "困了",
+      "file": "meme/困了.webp",
+      "when": "用户真的累了、状态不好（白天也能用，但别当晚安）",
+      "note": "闭眼打盹，雪花飘落"
+    },
+    {
+      "id": "snuggle",
+      "label": "贴贴",
+      "file": "meme/贴贴.webp",
+      "when": "撒娇、亲近、道谢",
+      "note": "桑多涅抱着哥伦比娅玩偶"
+    },
+    {
+      "id": "yay",
+      "label": "好耶",
+      "file": "meme/好耶.webp",
+      "when": "成功、通过、值得庆祝",
+      "note": "张嘴笑，双手张开"
+    },
+    {
+      "id": "sing",
+      "label": "唱歌",
+      "file": "meme/唱歌.webp",
+      "when": "心情好、想逗用户开心",
+      "note": "闭眼轻唱，音符飘起"
+    },
+    {
+      "id": "curtain",
+      "label": "谢幕",
+      "file": "meme/谢幕.webp",
+      "when": "收尾、告别、晚安",
+      "note": "蓝焰与玫瑰，闭眼谢幕"
+    }
+  ]
+}
