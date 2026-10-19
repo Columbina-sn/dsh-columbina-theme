@@ -430,6 +430,10 @@ ok(
   proactiveBox !== undefined && proactiveBox.checked === true,
   proactiveBox?.checked,
 )
+ok(
+  '浮层面板正文有独立滚动，不会被 max-height 截断',
+  /\.colu-overlay-body\{[^}]*overflow-y:auto/.test(cssText),
+)
 ok('文本域先填上宿主的人格', personaArea.value === '哥伦比娅的设定', personaArea.value)
 
 const beforeToggle = bootE.calls.length

@@ -439,7 +439,14 @@ ok(
 )
 ok(
   '开启后人格规则列出问候/道谢等主动时机',
-  lastSection(A).text.includes('可以主动贴的时机') && lastSection(A).text.includes('用户打招呼'),
+  lastSection(A).text.includes('可以主动贴的时机') && lastSection(A).text.includes('- 贴贴：'),
+)
+ok(
+  '主动模式覆盖 12 张表情，并允许用户直接点名要图',
+  lastSection(A).text.includes('- 好吃：') &&
+    lastSection(A).text.includes('- 唱歌：') &&
+    lastSection(A).text.includes('- 谢幕：') &&
+    lastSection(A).text.includes('发个表情 / 贴一张'),
 )
 
 const del = makeRes()
