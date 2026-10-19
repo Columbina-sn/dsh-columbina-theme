@@ -21,3 +21,12 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+---
+
+Note: The MIT License above applies to the source code only. Character art,
+emoji images, the hero avatar, and other visual assets under `meme/` are
+© miHoYo / HoYoverse or their respective rights holders and are **not**
+licensed under the MIT License. Background images are not distributed with
+this repository; users who add their own background images are responsible
+for their rights and licenses.
