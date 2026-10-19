@@ -377,6 +377,32 @@ ok(
 ok('自定义条目落盘', (await readStateFile()).customStickers.length === 1)
 ok('人格附录立刻跟上（新贴纸马上能贴）', lastSection(A).text.includes('自定的') && lastSection(A).text.includes('测试用'))
 
+const customEdit = await writeTo('/columbina/stickers/update', { id: upId, label: '改过的', when: '改过的场景' })
+ok(
+  '自定义表情可以改名字/触发场景',
+  JSON.parse(customEdit.body).value.state.customStickers[0].label === '改过的' &&
+    (await readStateFile()).customStickers[0].when === '改过的场景',
+)
+const packEdit = await writeTo('/columbina/stickers/update', { id: 'yay', label: '里程碑', when: '发布成功才贴' })
+ok(
+  '包内表情可以改名字/触发场景，人格附录跟着更新',
+  JSON.parse(packEdit.body).value.stickers.items.find((it) => it.id === 'yay').label === '里程碑' &&
+    lastSection(A).text.includes('里程碑') &&
+    (await readStateFile()).stickerOverrides.yay.label === '里程碑',
+)
+const packHide = await writeTo('/columbina/stickers/update', { id: 'yay', hidden: true })
+ok(
+  '包内表情可以隐藏，且人格清单不再列它',
+  JSON.parse(packHide.body).value.stickers.items.find((it) => it.id === 'yay').hidden === true &&
+    !lastSection(A).text.includes('![哥伦比娅·里程碑]'),
+)
+const packShow = await writeTo('/columbina/stickers/update', { id: 'yay', hidden: false })
+ok(
+  '隐藏的包内表情可以重新显示',
+  JSON.parse(packShow.body).value.stickers.items.find((it) => it.id === 'yay').hidden === false &&
+    lastSection(A).text.includes('![哥伦比娅·里程碑]'),
+)
+
 const staleUp = makeRes()
 await route.handler(makeReq('POST', '/columbina/stickers', JSON.stringify({ rev: 1, name: 'x.png', data: 'data:image/png;base64,' + PNG_B64 })), staleUp)
 ok('上传也受 rev 闸门管（过期 → 409 stale）', staleUp.statusCode === 409 && JSON.parse(staleUp.body).error.code === 'stale', staleUp.statusCode)

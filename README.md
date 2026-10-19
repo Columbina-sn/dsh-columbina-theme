@@ -48,7 +48,7 @@
 | 表情包 | 包内 `meme/` 有 12 张官方表情（WebP，无字高清版），`stickers.json` 是清单。宿主半把清单拼成「【表情包】」说明附在人格之后，每张图的绝对路径整行写好；并开清单/字节路由。 |
 | 主动贴表情 | 默认开启：在问候/问身份/道谢/累了/开心/难过/任务完成/被夸这些情绪节点，提示词鼓励主动贴一张，不必等用户要求；普通技术回复仍然不贴。可在侧边栏关闭。**这是提示词规则，不是消息拦截器。** |
 | 防连发 | 默认开启「同一张表情最多连续 2 次」：如果最近两轮已经用过同一张，提示词会要求换一张或不贴。可在侧边栏关闭。**这是提示词规则，不是消息拦截器。** |
-| 表情包管理器 | 编辑器里一行入口；打开是一整页管理器：加图、删自己加的图、调聊天贴图大小（48–240px）。自添加的图落在 `stickers-custom/`。 |
+| 表情包管理器 | 编辑器里一行入口；打开是一整页管理器：加图、编辑已有表情的名字/触发词、隐藏/显示包内表情、删除自己加的图、调聊天贴图大小（48–240px）。自添加的图落在 `stickers-custom/`。 |
 | 背景图 | `Background/` 是唯一真相：宿主半扫描目录并按文件名发字节；客户端在 `body` 上挂两层交叉淡入 + 色纱。支持选起点、自动轮换（15–3600 秒）、淡化（0.2–0.85）。**仓库不带图。** |
 | 欢迎页 | 占用 `conversation.hero.brand.mark` 单占位槽，渲染 72px 圆形星眸头像 + 思源宋体欢迎语；字节走 `GET /columbina/hero`；整行纯装饰。 |
 | 输入框占位 | 用纯 CSS 把原生占位染透明，再用 `::after` 写「月色正好，想做点什么？♪」；只对默认/欢迎页默认两个前缀生效。 |
@@ -94,7 +94,7 @@ Remove-Item "$env:USERPROFILE\.dsh\columbina-theme.json" -ErrorAction SilentlyCo
 1. 安装后按 F5，侧边栏最下方、设置按钮旁边会出现「☾ 哥伦比娅」；也可以在「设置 → 哥伦比娅 · 主题」打开同一份编辑器。
 2. 编辑框里写的就是人格底稿；点「保存设定」，之后每一轮对话都按这段设定回答。
 3. 顶部五个开关：**哥伦比娅人格**、**月隐银蓝主题**、**允许发表情包**、**主动贴表情**、**同一张最多连续 2 次**。
-4. 「表情包管理」里可以加图、删自己加的图、调聊天贴图大小。
+4. 「表情包管理」里可以加图、编辑已有表情、隐藏包内表情、删自己加的图、调聊天贴图大小。
 5. 背景区：先把图片放进插件的 `Background/`，刷新页面；然后选「背景图 / 简约（无图）」、点缩略图选起点、按需开自动轮换和淡化。
 6. 「恢复默认」把默认人格底稿填回编辑框（还要点一次保存）；「重新载入」丢弃未保存的改动。
 
@@ -125,6 +125,7 @@ Remove-Item "$env:USERPROFILE\.dsh\columbina-theme.json" -ErrorAction SilentlyCo
   "noRepeat": true,
   "stickerSize": 128,
   "customStickers": [],
+  "stickerOverrides": {},
   "hero": { "image": "meme/星眸.png", "title": "今天的 token，能分我一口吗？" },
   "background": { "enabled": true, "current": "", "rotate": false, "interval": 90, "dim": 0.6 },
   "rev": 3
@@ -141,6 +142,7 @@ Remove-Item "$env:USERPROFILE\.dsh\columbina-theme.json" -ErrorAction SilentlyCo
 | `noRepeat` | 防连发开关；默认 `true`。开启时提示词要求同一张最多连续 2 次。 |
 | `stickerSize` | 聊天贴图最大边长，落盘前夹在 48–320，默认 128。 |
 | `customStickers` | 面板里自添加的条目 `{ id, file, label, when }`；`file` 只是 `stickers-custom/` 下的文件名。 |
+| `stickerOverrides` | 包内表情的改名/触发词覆盖/隐藏：`id -> { label?, when?, note?, hidden? }`；包内文件不动。 |
 | `hero` | 欢迎页形象（包内相对路径）与欢迎语；图读不出来时 `hero.ready=false`，页面只显示文字。 |
 | `background` | `enabled` 总开关、`current` 起点文件名（空串＝按目录顺序第一张）、`rotate`/`interval` 轮换、`dim` 色纱浓度。 |
 | `rev` | 写入版本号，每次成功写入 +1；手工改文件时把它一起调大即可。 |
@@ -180,8 +182,10 @@ Remove-Item "$env:USERPROFILE\.dsh\columbina-theme.json" -ErrorAction SilentlyCo
 
 规则同时写进人格附录：
 
-- **主动贴表情（默认开）**：在问候/问身份、道谢、累了/开心/难过、任务完成、被夸时，主动贴一张，不必等用户要求。比如「你好」「你是谁」可以贴「期待」或「抱抱」；「谢谢」可以贴「贴贴」；任务完成可以贴「好耶」。
-- **12 张都有明确触发场景**：晚安（23:00 后收尾）、抱抱（安慰）、期待（新开始/等好消息）、出发（开工/动手）、好吃（吃的/庆祝）、思考（权衡/怎么选）、睡觉（23:00 后熬夜）、困了（困/累，白天可用但别当晚安）、贴贴（谢谢/亲近）、好耶（完成/通过）、唱歌（心情好/想听歌）、谢幕（收尾/告别）。
+- **主动贴表情（默认开）**：在问候/问身份、道谢、累了/开心/难过、被夸时，主动贴一张，不必等用户要求。比如「你好」「你是谁」可以贴「期待」或「抱抱」；「谢谢」可以贴「贴贴」。
+- **12 张都有明确触发场景**：晚安（23:00 后收尾）、抱抱（安慰）、期待（新开始/等好消息）、出发（开工/动手）、好吃（吃的/庆祝）、思考（权衡/怎么选）、睡觉（23:00 后熬夜）、困了（困/累，白天可用但别当晚安）、贴贴（谢谢/亲近）、好耶（真正的里程碑：功能完成/测试全绿/发布成功）、唱歌（心情好/想听歌）、谢幕（收尾/告别）。
+- **中性池随机**：期待 / 出发 / 思考 / 唱歌 / 谢幕；没有强烈情绪、但想贴一张时，从这五张里随机选，不要固定同一张。
+- **好耶降频**：日常小修、单个文件改动、每次提交都不贴「好耶」；只在真正的里程碑贴。
 - 如果用户明确说「发个表情 / 贴一张」，就从清单里选一张最贴切的，不要再克制。
 - 关掉「主动贴表情」后：默认不贴，大多数回复都不贴；只在情绪真的到了的时候贴（事情做成了、想鼓励你、想撒个娇、要道歉、被夸了）。
 - 一次最多 1 张；不要每轮都贴。
@@ -194,7 +198,9 @@ Remove-Item "$env:USERPROFILE\.dsh\columbina-theme.json" -ErrorAction SilentlyCo
 ### 管理器
 
 - 加图：选文件 → 转 data URL → `POST /columbina/stickers`；落盘到 `stickers-custom/`。
-- 删图：只允许删自己加的；包内素材要改 `stickers.json`。
+- 编辑：每张卡片都有「编辑」，可改名字和触发场景；包内素材写入 `stickerOverrides`，自定义项直接改状态文件，不动磁盘文件。
+- 隐藏：包内表情不能删仓库文件，但可以「隐藏」；隐藏后人格清单里不再出现，管理器里可点「显示」恢复。
+- 删除：只有自己加的图会真的删文件；包内素材没有删除按钮。
 - 大小：48–240px 滑杆；默认 128px。
 - 页面缩略图与聊天贴图都走宿主半字节路由（`/columbina/sticker/<id>`），不用 `file://`。
 - 支持格式：`png` / `jpg` / `jpeg` / `gif` / `webp` / `avif`；单张 ≤ 8MB。
@@ -248,7 +254,7 @@ Remove-Item "$env:USERPROFILE\.dsh\columbina-theme.json" -ErrorAction SilentlyCo
 │ lib/index.js                                                     │
 │  · systemPrompt.section('columbina:persona')                     │
 │  · /columbina/state      状态读写（rev 乐观并发 + 落盘）              │
-│  · /columbina/stickers   清单 / 上传 / 删除                         │
+│  · /columbina/stickers   清单 / 上传 / 编辑 / 隐藏 / 删除             │
 │  · /columbina/sticker/:id 字节（ETag / 304 / nosniff）             │
 │  · /columbina/backgrounds、/background/:name 背景扫描/字节          │
 │  · /columbina/hero       欢迎页头像字节                            │
@@ -275,6 +281,7 @@ Remove-Item "$env:USERPROFILE\.dsh\columbina-theme.json" -ErrorAction SilentlyCo
 | GET/POST | `/columbina/state` | 读/写状态；POST 必须带 `rev` |
 | GET | `/columbina/stickers` | 表情包清单；`?reload=1` 强制重扫 |
 | POST | `/columbina/stickers` | 上传自添加表情（data URL） |
+| POST | `/columbina/stickers/update` | 改名字/触发词，或隐藏/显示包内表情 |
 | POST | `/columbina/stickers/remove` | 删除自添加表情 |
 | GET | `/columbina/sticker/<id>` | 单张表情字节（ETag/304） |
 | GET | `/columbina/backgrounds` | 背景清单；`?reload=1` 强制重扫 |
@@ -305,8 +312,8 @@ node test/contrast.mjs
 
 当前基线：
 
-- 宿主 **110/110**
-- 客户端 **126/126**
+- 宿主 **114/114**
+- 客户端 **128/128**
 - 对比度 **31/31**
 
 host 自检全部跑在临时目录里（脚本自己把 `DSH_HOME` 指过去，不碰真实的 `~/.dsh`）。client 自检用极简 DOM 桩，不会真的开浏览器。contrast 会按 WCAG 对比度检查正文、次级文字、语义状态色和主按钮。

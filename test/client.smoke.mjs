@@ -543,6 +543,24 @@ ok('点入口打开管理器页（挂在 body 上的覆盖层）', overlayK !== 
 const managerK = overlayK.querySelector('[data-role="sticker-grid"]')
 const cardsK = managerK.descendants().filter((el) => el.className === 'colu-sticker')
 ok('管理器网格按清单渲染卡片（不重复堆）', cardsK.length === 2, cardsK.length)
+const editK = cardsK[0].descendants().find((el) => el.attrs['data-role'] === 'edit-sticker')
+const hideK = cardsK[0].descendants().find((el) => el.attrs['data-role'] === 'toggle-sticker')
+ok(
+  '管理器给已有表情提供编辑/隐藏入口',
+  editK !== undefined && hideK !== undefined && hideK.textContent === '隐藏',
+  [editK?.textContent, hideK?.textContent],
+)
+const managerRootK = overlayK.descendants().find((el) => el.className === 'colu-manager') ?? overlayK
+managerRootK.dispatch('click', { target: editK })
+const editingK = managerK.descendants().find((el) => String(el.className).includes('colu-sticker--editing'))
+ok(
+  '点编辑进入原地编辑（不依赖 window.prompt）',
+  editingK !== undefined &&
+    editingK.querySelector('[data-role="edit-label"]') !== null &&
+    editingK.querySelector('[data-role="save-edit"]') !== null,
+)
+const cancelK = editingK?.querySelector('[data-role="cancel-edit"]')
+if (cancelK !== undefined) managerRootK.dispatch('click', { target: cancelK })
 const imgK = cardsK[0].descendants().find((el) => el.tagName === 'img')
 ok(
   '图片指向宿主半的字节路由，不是 file:// 本地路径',
