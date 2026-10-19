@@ -474,6 +474,10 @@ ok(
     lastSection(A).text.includes('- 谢幕：') &&
     lastSection(A).text.includes('发个表情 / 贴一张'),
 )
+ok(
+  '随机池包含好吃 / 抱抱 / 贴贴',
+  lastSection(A).text.includes('期待 / 出发 / 思考 / 唱歌 / 谢幕 / 好吃 / 抱抱 / 贴贴'),
+)
 
 const del = makeRes()
 await route.handler(makeReq('POST', '/columbina/stickers/remove', JSON.stringify({ rev: await revNow(), id: upId })), del)
