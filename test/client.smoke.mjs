@@ -414,10 +414,16 @@ const editor = bootE.refs[0].current.children[0]
 ok('设置页组件跑起来后挂出了编辑器', editor?.className === 'colu-editor', editor?.className)
 
 const themeBox = editor.querySelector('[data-role="theme"]')
+const noRepeatBox = editor.querySelector('[data-role="no-repeat"]')
 const personaArea = editor.querySelector('[data-role="persona"]')
 const saveBtn = editor.querySelector('[data-role="save"]')
 const statusEl = editor.querySelector('[data-role="status"]')
 ok('编辑器有开关 / 文本域 / 保存按钮 / 状态位', Boolean(themeBox && personaArea && saveBtn && statusEl))
+ok(
+  '编辑器有“同一张最多连续 2 次”开关，默认开启',
+  noRepeatBox !== undefined && noRepeatBox.checked === true,
+  noRepeatBox?.checked,
+)
 ok('文本域先填上宿主的人格', personaArea.value === '哥伦比娅的设定', personaArea.value)
 
 const beforeToggle = bootE.calls.length

@@ -355,6 +355,7 @@ ok(
   m0.stickerSize === 128 && Array.isArray(m0.customStickers) && m0.customStickers.length === 0,
   [m0.stickerSize, m0.customStickers],
 )
+ok('state 默认开启同表情防连发', m0.noRepeat === true, m0.noRepeat)
 
 const up = await writeTo('/columbina/stickers', { name: '我的图.png', label: '自定的', when: '测试用', data: 'data:image/png;base64,' + PNG_B64 })
 const upValue = JSON.parse(up.body).value
@@ -396,6 +397,27 @@ ok(
   'stickerSize 取整并落盘',
   JSON.parse(szOk.body).value.stickerSize === 128 && (await readStateFile()).stickerSize === 128,
   JSON.parse(szOk.body).value.stickerSize,
+)
+
+const nrOff = await post({ noRepeat: false })
+ok(
+  '同表情防连发可以关闭并落盘',
+  JSON.parse(nrOff.body).value.noRepeat === false && (await readStateFile()).noRepeat === false,
+  JSON.parse(nrOff.body).value.noRepeat,
+)
+ok(
+  '关闭后人格规则不再要求“最多连续两次”',
+  !lastSection(A).text.includes('最多连续出现两次') && lastSection(A).text.includes('尽量别连续重复'),
+)
+const nrOn = await post({ noRepeat: true })
+ok(
+  '同表情防连发可以重新开启并落盘',
+  JSON.parse(nrOn.body).value.noRepeat === true && (await readStateFile()).noRepeat === true,
+  JSON.parse(nrOn.body).value.noRepeat,
+)
+ok(
+  '开启后人格规则包含“最多连续两次”',
+  lastSection(A).text.includes('同一张表情最多连续出现两次'),
 )
 
 const del = makeRes()
