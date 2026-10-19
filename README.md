@@ -14,6 +14,14 @@
 
 > 这是一个**外观插件**，不修改 `app.asar`、不改 DSH 本体、不碰系统目录。所有效果都由插件自己的样式表、系统提示词 section 与 fenced 路由提供；卸载插件并刷新页面即可还原。
 
+## 基于 dsh-cyrene-theme
+
+本项目的宿主半/客户端半结构、fenced 路由、`rev` 乐观并发、槽位注册与三套自检脚本，来自 [**berhbro/dsh-cyrene-theme**](https://github.com/berhbro/dsh-cyrene-theme)（MIT）。
+
+保留的是**架构**；重写的是主题配色、角色内容、路由前缀（`/cyrene` → `/columbina`）、状态文件名、默认人格、12 张官方表情、欢迎页头像与文案。
+
+原项目版权归 **berhbro**；原 MIT 声明保留在 [LICENSE](LICENSE)。
+
 ## 能力
 
 | 部分 | 实现 |
@@ -30,10 +38,10 @@
 
 ## 安装
 
-从 GitHub 安装（把 `<owner>` 换成仓库所属的 GitHub 用户名或组织）：
+从 GitHub 安装：
 
 ```powershell
-dsh plugin --profile desktop add github:<owner>/dsh-columbina-theme
+dsh plugin --profile desktop add github:Columbina-sn/dsh-columbina-theme
 ```
 
 本地开发时也可以直接装目录：

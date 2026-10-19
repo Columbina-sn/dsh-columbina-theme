@@ -41,5 +41,13 @@
     "skin",
     "persona"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Columbina-sn/dsh-columbina-theme.git"
+  },
+  "homepage": "https://github.com/Columbina-sn/dsh-columbina-theme#readme",
+  "bugs": {
+    "url": "https://github.com/Columbina-sn/dsh-columbina-theme/issues"
+  },
   "license": "MIT"
 }

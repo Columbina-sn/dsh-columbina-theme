@@ -2,7 +2,9 @@
 
 ## 代码
 
-本仓库的源代码（`lib/`、`test/`、`tools/`、`cordis.patch.yml`、`package.json` 等）以 **MIT** 发布，基于 [`berhbro/dsh-cyrene-theme`](https://github.com/berhbro/dsh-cyrene-theme) 改造；原版权声明保留在 `LICENSE`。
+本仓库的源代码（`lib/`、`test/`、`tools/`、`cordis.patch.yml`、`package.json` 等）以 **MIT** 发布，基于 [**berhbro/dsh-cyrene-theme**](https://github.com/berhbro/dsh-cyrene-theme) 改造；原版权声明保留在 `LICENSE`。
+
+上游项目提供的是架构与自检框架（宿主半/客户端半结构、fenced 路由、`rev` 乐观并发、槽位注册、三套 smoke test）；本仓库的主题、角色内容、配色、路由前缀、状态文件名、素材与默认人格由本项目重写。
 
 ## 素材（不在 MIT 范围内）
 
