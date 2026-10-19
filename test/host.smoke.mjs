@@ -356,6 +356,7 @@ ok(
   [m0.stickerSize, m0.customStickers],
 )
 ok('state 默认开启同表情防连发', m0.noRepeat === true, m0.noRepeat)
+ok('state 默认开启主动贴表情', m0.proactive === true, m0.proactive)
 
 const up = await writeTo('/columbina/stickers', { name: '我的图.png', label: '自定的', when: '测试用', data: 'data:image/png;base64,' + PNG_B64 })
 const upValue = JSON.parse(up.body).value
@@ -418,6 +419,27 @@ ok(
 ok(
   '开启后人格规则包含“最多连续两次”',
   lastSection(A).text.includes('同一张表情最多连续出现两次'),
+)
+
+const prOff = await post({ proactive: false })
+ok(
+  '主动贴表情可以关闭并落盘',
+  JSON.parse(prOff.body).value.proactive === false && (await readStateFile()).proactive === false,
+  JSON.parse(prOff.body).value.proactive,
+)
+ok(
+  '关闭后不再列出主动贴的时机',
+  !lastSection(A).text.includes('可以主动贴的时机') && lastSection(A).text.includes('默认不贴'),
+)
+const prOn = await post({ proactive: true })
+ok(
+  '主动贴表情可以重新开启并落盘',
+  JSON.parse(prOn.body).value.proactive === true && (await readStateFile()).proactive === true,
+  JSON.parse(prOn.body).value.proactive,
+)
+ok(
+  '开启后人格规则列出问候/道谢等主动时机',
+  lastSection(A).text.includes('可以主动贴的时机') && lastSection(A).text.includes('用户打招呼'),
 )
 
 const del = makeRes()

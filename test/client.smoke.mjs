@@ -415,6 +415,7 @@ ok('设置页组件跑起来后挂出了编辑器', editor?.className === 'colu-
 
 const themeBox = editor.querySelector('[data-role="theme"]')
 const noRepeatBox = editor.querySelector('[data-role="no-repeat"]')
+const proactiveBox = editor.querySelector('[data-role="proactive"]')
 const personaArea = editor.querySelector('[data-role="persona"]')
 const saveBtn = editor.querySelector('[data-role="save"]')
 const statusEl = editor.querySelector('[data-role="status"]')
@@ -423,6 +424,11 @@ ok(
   '编辑器有“同一张最多连续 2 次”开关，默认开启',
   noRepeatBox !== undefined && noRepeatBox.checked === true,
   noRepeatBox?.checked,
+)
+ok(
+  '编辑器有“主动贴表情”开关，默认开启',
+  proactiveBox !== undefined && proactiveBox.checked === true,
+  proactiveBox?.checked,
 )
 ok('文本域先填上宿主的人格', personaArea.value === '哥伦比娅的设定', personaArea.value)
 
