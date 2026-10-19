@@ -24,9 +24,10 @@ SOFTWARE.
 
 ---
 
-Note: The MIT License above applies to the source code only. Character art,
-emoji images, the hero avatar, and other visual assets under `meme/` are
-© miHoYo / HoYoverse or their respective rights holders and are **not**
-licensed under the MIT License. Background images are not distributed with
-this repository; users who add their own background images are responsible
-for their rights and licenses.
+Note: The MIT License above applies to the source code only. Character art
+and emoji images under `meme/` are © miHoYo / HoYoverse or their respective
+rights holders and are **not** licensed under the MIT License. The hero avatar
+`meme/星眸.png` is by 糯米不唐 (Douyin: `liurx665`) and remains © the original
+author; it is included with attribution for non-commercial fan use.
+Background images are not distributed with this repository; users who add
+their own background images are responsible for their rights and licenses.
